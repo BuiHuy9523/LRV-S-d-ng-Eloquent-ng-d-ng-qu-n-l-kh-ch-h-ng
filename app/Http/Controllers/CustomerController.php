@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Http\Requests\FormExamleRequest;
 use DemeterChain\C;
 use Illuminate\Http\Request;
 
@@ -15,14 +16,23 @@ class CustomerController extends Controller
     public function create(){
         return view('customers.create');
     }
-    public function insert(Request $request){
+    public function insert(FormExamleRequest $request){
         $customer = new Customer();
         $customer->name = $request->input('name');
         $customer->email = $request->input('email');
         $customer->dob = $request->input('dob');
-        $customer->save();
-        return redirect()->route('list');
+        $success = 'insert thanh cong';
+        return redirect()->route('list', compact('success'));
+
     }
+//    public function insert(Request $request){
+//        $customer = new Customer();
+//        $customer->name = $request->input('name');
+//        $customer->email = $request->input('email');
+//        $customer->dob = $request->input('dob');
+//        $customer->save();
+//        return redirect()->route('list');
+//    }
     public function edit($id){
         $customer = Customer::find($id);
         return view('customers.edit', compact('customer', 'id'));
